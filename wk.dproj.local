@@ -6,5 +6,20 @@
     <Transaction>2021/08/03 10:53:20.069,D:\Fontes\wk\view\uMain.dfm=C:\Users\Gui\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
     <Transaction>2021/08/03 10:53:20.069,D:\Fontes\wk\view\uMain.pas=C:\Users\Gui\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2021/08/03 10:53:44.575,D:\Fontes\wk\wk.dproj=C:\Users\Gui\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2021/08/03 15:36:13.222,=D:\Fontes\wk\Unit1.pas</Transaction>
+    <Transaction>2021/08/03 15:37:16.392,D:\Fontes\wk\dmMain.dfm=D:\Fontes\wk\Unit1.dfm</Transaction>
+    <Transaction>2021/08/03 15:37:16.392,D:\Fontes\wk\dmMain.pas=D:\Fontes\wk\Unit1.pas</Transaction>
+    <Transaction>2021/08/03 15:47:31.073,=D:\Fontes\wk\Unit1.pas</Transaction>
+    <Transaction>2021/08/03 15:49:01.678,D:\Fontes\wk\model\mConfigBD.pas=D:\Fontes\wk\Unit1.pas</Transaction>
+    <Transaction>2021/08/03 15:49:59.488,D:\Fontes\wk\view\vMain.dfm=D:\Fontes\wk\view\uMain.dfm</Transaction>
+    <Transaction>2021/08/03 15:49:59.488,D:\Fontes\wk\view\vMain.pas=D:\Fontes\wk\view\uMain.pas</Transaction>
+    <Transaction>2021/08/03 15:59:01.346,=D:\Fontes\wk\Unit1.pas</Transaction>
+    <Transaction>2021/08/03 16:00:12.380,D:\Fontes\wk\view\vConfigBD.pas=D:\Fontes\wk\Unit1.pas</Transaction>
+    <Transaction>2021/08/03 16:00:12.380,D:\Fontes\wk\view\vConfigBD.dfm=D:\Fontes\wk\Unit1.dfm</Transaction>
+    <Transaction>2021/08/03 16:21:07.671,D:\Fontes\wk\udmMain.pas=D:\Fontes\wk\dmMain.pas</Transaction>
+    <Transaction>2021/08/03 16:21:07.671,D:\Fontes\wk\udmMain.dfm=D:\Fontes\wk\dmMain.dfm</Transaction>
+    <Transaction>2021/08/03 16:37:49.523,=D:\Fontes\wk\Unit1.pas</Transaction>
+    <Transaction>2021/08/03 16:38:05.149,D:\Fontes\wk\model\mDefObj.pas=D:\Fontes\wk\Unit1.pas</Transaction>
+    <Transaction>2021/08/03 16:40:00.693,D:\Fontes\wk\model\mDefObj.pas=</Transaction>
   </Transactions>
 </BorlandProject>
