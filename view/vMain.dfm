@@ -496,6 +496,7 @@ object FrmMain: TFrmMain
   end
   object mtItensPedido: TFDMemTable
     AfterPost = mtItensPedidoAfterPost
+    AfterDelete = mtItensPedidoAfterDelete
     OnCalcFields = mtItensPedidoCalcFields
     AggregatesActive = True
     FetchOptions.AssignedValues = [evMode]

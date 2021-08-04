@@ -80,6 +80,7 @@ type
     procedure actCancelarPedidoExecute(Sender: TObject);
     procedure edtQuantidadeExit(Sender: TObject);
     procedure actConfiguracoesExecute(Sender: TObject);
+    procedure mtItensPedidoAfterDelete(DataSet: TDataSet);
   strict private
     fTipoOperacaoItemAtual: TTipoOperacao;
     const LABEL_INSERIR_ITEM: string = 'Produto';
@@ -146,6 +147,11 @@ begin
     on e: exception do
       raise Exception.Create('[SalvarItem]'+e.Message);
   end;
+end;
+
+procedure TFrmMain.mtItensPedidoAfterDelete(DataSet: TDataSet);
+begin
+  RefreshTotalPedido;
 end;
 
 procedure TFrmMain.mtItensPedidoAfterPost(DataSet: TDataSet);
