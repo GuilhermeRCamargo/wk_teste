@@ -1,7 +1,9 @@
 object FrmConfigBD: TFrmConfigBD
   Left = 0
   Top = 0
-  Caption = 'Configura'#231#227'o Banco de Dados'
+  ActiveControl = edtHost
+  BorderIcons = [biSystemMenu]
+  Caption = 'Configura'#231#227'o do Banco de Dados MySQL'
   ClientHeight = 129
   ClientWidth = 310
   Color = clBtnFace

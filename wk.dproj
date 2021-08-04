@@ -114,6 +114,17 @@
             <Form>FrmConfigBD</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="model\mCliente.pas"/>
+        <DCCReference Include="model\mProduto.pas"/>
+        <DCCReference Include="model\mPedido.pas"/>
+        <DCCReference Include="controller\cPedido.pas"/>
+        <DCCReference Include="dao\dPedido.pas"/>
+        <DCCReference Include="view\vGetCodigoPedido.pas">
+            <Form>FrmGetCodigoPedido</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="dao\dCliente.pas"/>
+        <DCCReference Include="dao\dProduto.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
