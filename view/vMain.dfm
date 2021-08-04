@@ -323,8 +323,7 @@ object FrmMain: TFrmMain
       BiDiMode = bdRightToLeft
       ParentBiDiMode = False
       TabOrder = 3
-      OnChange = edtValorUnitarioChange
-      OnKeyPress = edtValorUnitarioKeyPress
+      OnExit = edtQuantidadeExit
     end
     object edtQuantidade: TEdit
       Left = 375
@@ -335,8 +334,7 @@ object FrmMain: TFrmMain
       BiDiMode = bdRightToLeft
       ParentBiDiMode = False
       TabOrder = 2
-      OnChange = edtValorUnitarioChange
-      OnKeyPress = edtValorUnitarioKeyPress
+      OnExit = edtQuantidadeExit
     end
     object edtCodProduto: TEdit
       Left = 17
@@ -384,6 +382,7 @@ object FrmMain: TFrmMain
       Width = 133
       Height = 29
       Action = actGravarPedido
+      Enabled = False
     end
     object butCarregarPedido: TSpeedButton
       Left = 155

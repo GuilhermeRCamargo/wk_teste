@@ -1,16 +1,3 @@
-{Senhor(a) avaliador,
-Durante meu percurso profissional desenvolvendo em Delphi utilizei componentes próprios ou de
-terceiros (devExpress, tms, etc) para trabalhar com edits de valores
-
-Nesta avaliação, para não utilizar recursos que não fossem nativos da IDE e assim talvez impedir
-a compilação do projeto por parte dos avaliadores, decidi adaptar esta solução por ter optado em
-não utilizar os DBEdits
-
-então edtValorUnitarioChange e edtValorUnitarioKeyPress são adaptações que utilizam
-trechos de codigo de https://www.devmedia.com.br/forum/formatar-edit-como-float-na-mao-ajudem/229210,
-sendo a única fonte externa de código utilizada neste desenvolvimento.
-}
-
 unit vMain;
 
 interface
@@ -77,8 +64,6 @@ type
     Label11: TLabel;
     lblDataEmissao: TLabel;
     procedure butConfigBDClick(Sender: TObject);
-    procedure edtValorUnitarioKeyPress(Sender: TObject; var Key: Char);
-    procedure edtValorUnitarioChange(Sender: TObject);
     procedure edtCodigoClienteExit(Sender: TObject);
     procedure edtCodigoClienteChange(Sender: TObject);
     procedure edtCodProdutoExit(Sender: TObject);
@@ -94,9 +79,9 @@ type
     procedure actCarregarPedidoExecute(Sender: TObject);
     procedure actGravarPedidoExecute(Sender: TObject);
     procedure actCancelarPedidoExecute(Sender: TObject);
+    procedure edtQuantidadeExit(Sender: TObject);
   strict private
     fTipoOperacaoItemAtual: TTipoOperacao;
-    fValorUnitario, fQuantidade: string;
     const LABEL_INSERIR_ITEM: string = 'Produto';
     const LABEL_EDITAR_ITEM: string = 'Editando Item';
     const LABEL_SALVAR_EDICAO_ITEM: string = 'Alterar [F5]';
@@ -323,9 +308,7 @@ begin
     begin
       EdtCodProduto.Text:= '';
       edtDescProduto.Text:= '';
-      fQuantidade:= '';
       edtQuantidade.Text:= '';
-      fValorUnitario:= '';
       edtValorUnitario.Text:= '';
       if TipoOperacaoItemAtual = toiAlterar then
         TipoOperacaoItemAtual:= toiInserir;
@@ -449,10 +432,8 @@ begin
       end
       else
       begin
-        fQuantidade:= '1';
         edtQuantidade.Text:= '1';
-        fValorUnitario:= FormatFloat('#,##0.00', AProduto.PrecoVenda);
-        edtValorUnitario.Text:= fValorUnitario;
+        edtValorUnitario.Text:= FormatFloat('#,##0.00', AProduto.PrecoVenda);
       end;
       edtDescProduto.Text:= AProduto.Descricao;
     finally
@@ -464,57 +445,12 @@ begin
   end;
 end;
 
-procedure TFrmMain.edtValorUnitarioChange(Sender: TObject);
-  function OccurPos(T, S : ShortString): Byte;
-  var P : Byte;
-  begin
-    Result := 0;
-    P := Pos (T, S);
-    while P > 0 do
-    begin
-      Inc (Result);
-      S := Copy (S, P + Length (T), 255);
-      P := Pos (T, S);
-    end;
-  end;
+procedure TFrmMain.edtQuantidadeExit(Sender: TObject);
 begin
-  try
-    if Sender = edtValorUnitario then
-    begin
-      edtValorUnitario.Text := FormatFloat(',,,0.00',StrToFloatDef(fValorUnitario, 0));
-      edtValorUnitario.SelStart := length(fValorUnitario)+OccurPos('.',edtValorUnitario.Text);
-    end
-    else
-    begin
-      edtQuantidade.Text := FormatFloat(',,,0.00',StrToFloatDef(fQuantidade, 0));
-      edtQuantidade.SelStart := length(fQuantidade)+OccurPos('.',edtQuantidade.Text);
-    end;
-  except
-    on e: exception do
-      raise Exception.Create('[edtValorUnitarioChange]'+e.Message);
-  end;
+  if Sender is TEdit then
+    TEdit(Sender).Text:= FormatFloat('#,##0.00', StringToFloat(TEdit(Sender).Text));
 end;
 
-procedure TFrmMain.edtValorUnitarioKeyPress(Sender: TObject; var Key: Char);
-begin
-  try
-    if key in ['0'..'9',','] then
-      if Sender = edtValorUnitario then
-        fValorUnitario:= fValorUnitario+(key)
-      else
-        fQuantidade:= fQuantidade+(key);
-    if Key = #13 then
-      perform(WM_NEXTDLGCTL, 0, 0);
-    if (key = #8) then
-      if Sender = edtValorUnitario then
-        fValorUnitario:= copy(fValorUnitario,1,length(Trim(fValorUnitario))-1)
-      else
-        fQuantidade:= copy(fQuantidade,1,length(Trim(fQuantidade))-1);
-  except
-    on e: exception do
-      raise Exception.Create('[edtValorUnitarioKeyPress]'+e.Message);
-  end;
-end;
 
 procedure TFrmMain.LimparUI;
 begin
@@ -526,9 +462,7 @@ begin
     edtCidadeUFCliente.Text:= '';
     edtCodProduto.Text:= '';
     edtDescProduto.TexT:= '';
-    fQuantidade:= '';
     edtQuantidade.Text:= '';
-    fValorUnitario:= '';
     edtValorUnitario.Text:= '';
     mtItensPedido.EmptyDataSet;
     RefreshTotalPedido;
@@ -563,28 +497,6 @@ var AMT: TFDMemTAble;
 begin
   d:= StringToFloat(mtItensPedido.FieldByName('total_agg').AsString);
   lblTotalPedido.Caption:= 'Valor Total: '+FormatFloat('#,##0.00', d);
-  {try
-    AMT:= TFDMemTable.Create(nil);
-    try
-      AMT.Data:= mtItensPedido.Data;
-      with AMT do
-      begin
-        First;
-        d:= 0;
-        while not (Eof) do
-        begin
-          d:= d+FieldByName('quantidade').AsFloat*FieldByName('valor_unitario').AsFloat;
-          AMT.Next;
-        end;
-        lblTotalPedido.Caption:= 'Valor Total: '+FormatFloat('#,##0.00', d);
-      end;
-    finally
-      FreeAndNil(AMT);
-    end;
-  except
-    on e: exception do
-      raise Exception.Create('[RefreshTotalPedido]'+e.Message);
-  end;}
 end;
 
 procedure TFrmMain.SetTipoOperacaoItemAtual(
@@ -602,10 +514,8 @@ begin
         butSalvarItem.Font.Color:= clMaroon;
         edtCodProduto.Text:= FieldByName('cod_produto').AsString;
         edtDescProduto.Text:= FieldByName('desc_produto').AsString;
-        fQuantidade:= FormatFloat('#,##0.00', FieldByName('quantidade').AsFloat);
-        edtQuantidade.Text:= fQuantidade;
-        fValorUnitario:= FormatFloat('#,##0.00', FieldByName('valor_unitario').AsFloat);
-        edtValorUnitario.Text:= fValorUnitario;
+        edtQuantidade.Text:= FormatFloat('#,##0.00', FieldByName('quantidade').AsFloat);
+        edtValorUnitario.Text:= FormatFloat('#,##0.00', FieldByName('valor_unitario').AsFloat);
         edtCodProduto.Enabled:= False;
         edtDescProduto.Enabled:= False;
         edtQuantidade.SetFocus;
@@ -618,9 +528,7 @@ begin
         butSalvarItem.Font.Color:= clBlack;
         edtCodProduto.Text:= '';
         edtDescProduto.Text:= '';
-        fQuantidade:= '';
         edtQuantidade.Text:= '';
-        fValorUnitario:= '';
         edtValorUnitario.Text:= '';
         edtCodProduto.Enabled:= True;
         edtDescProduto.Enabled:= True;
