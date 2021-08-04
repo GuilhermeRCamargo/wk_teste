@@ -45,13 +45,13 @@ object FrmConfigBD: TFrmConfigBD
     Caption = 'Salvar'
     OnClick = butSalvarClick
   end
-  object butTestar: TSpeedButton
+  object butConectar: TSpeedButton
     Left = 158
     Top = 85
     Width = 105
     Height = 41
-    Caption = 'Testar'
-    OnClick = butTestarClick
+    Caption = 'Conectar'
+    OnClick = butConectarClick
   end
   object lblHost: TLabel
     Left = 7

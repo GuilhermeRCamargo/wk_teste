@@ -22,6 +22,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TdmMain, dmMain);
   Application.CreateForm(TFrmMain, FrmMain);
-  Application.CreateForm(TFrmGetCodigoPedido, FrmGetCodigoPedido);
   Application.Run;
 end.

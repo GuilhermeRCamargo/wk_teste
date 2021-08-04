@@ -63,7 +63,6 @@ type
     lblNumero: TLabel;
     Label11: TLabel;
     lblDataEmissao: TLabel;
-    procedure butConfigBDClick(Sender: TObject);
     procedure edtCodigoClienteExit(Sender: TObject);
     procedure edtCodigoClienteChange(Sender: TObject);
     procedure edtCodProdutoExit(Sender: TObject);
@@ -80,6 +79,7 @@ type
     procedure actGravarPedidoExecute(Sender: TObject);
     procedure actCancelarPedidoExecute(Sender: TObject);
     procedure edtQuantidadeExit(Sender: TObject);
+    procedure actConfiguracoesExecute(Sender: TObject);
   strict private
     fTipoOperacaoItemAtual: TTipoOperacao;
     const LABEL_INSERIR_ITEM: string = 'Produto';
@@ -180,7 +180,12 @@ procedure TFrmMain.pnlProdutoExit(Sender: TObject);
 begin
   try
     if TipoOperacaoItemAtual = toiAlterar then
-      TipoOperacaoItemAtual:= toiInserir;
+    begin
+      if Application.MessageBox('Deseja salvar as alterações no item?', 'WK', mb_yesno+mb_iconquestion) = idYes then
+        actSalvarItemExecute(Sender)
+      else
+        TipoOperacaoItemAtual:= toiInserir;
+    end;
   except
     on e: exception do
       raise Exception.Create('[pnlProdutoExit]'+e.Message);
@@ -278,6 +283,19 @@ begin
     end;
 end;
 
+procedure TFrmMain.actConfiguracoesExecute(Sender: TObject);
+begin
+  try
+    if Assigned(FrmConfigBD) then
+      FreeAndNil(FrmConfigBD);
+    FrmConfigBD:= TFrmConfigBD.Create(Application);
+    FrmConfigBD.ShowModal;
+  except
+    on e: exception do
+      raise Exception.Create('[actConfiguracoesExecute]'+e.Message);
+  end;
+end;
+
 procedure TFrmMain.actGravarPedidoExecute(Sender: TObject);
 var APedido: TPedido;
 begin
@@ -288,6 +306,8 @@ begin
       try
         if TPedidoController.Salvar(APedido) then
         begin
+          Application.MessageBox(PWideChar('Pedido Nº '+IntToStr(APedido.Numero)+' salvo com sucesso!'),
+           'WK', mb_ok+mb_iconinformation);
           LimparUI;
           if edtCodigoCliente.CanFocus then
             edtCodigoCliente.SetFocus;
@@ -320,21 +340,6 @@ begin
       raise Exception.Create('[actSalvarItemExecute]'+e.Message);
   end;
 end;
-
-procedure TFrmMain.butConfigBDClick(Sender: TObject);
-begin
-  try
-    if Assigned(FrmConfigBD) then
-      FreeAndNil(FrmConfigBD);
-    FrmConfigBD:= TFrmConfigBD.Create(Application);
-    FrmConfigBD.ShowModal;
-  except
-    on e: exception do
-      raise Exception.Create('[butConfigBDClick]'+e.Message);
-  end;
-end;
-
-
 
 constructor TFrmMain.Create(AOwner: TComponent);
 begin

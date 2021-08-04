@@ -328,6 +328,8 @@ begin
   try
     result:= TFDQuery.Create(nil);
     result.Connection:= FDConnection1;
+    if not (FDConnection1.Connected) then
+      raise Exception.Create(#13+'Banco de dados desconectado.');
   except
     on e: exception do
       raise Exception.Create('[GetQuery]'+e.Message);

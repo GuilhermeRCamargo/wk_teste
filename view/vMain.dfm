@@ -403,9 +403,8 @@ object FrmMain: TFrmMain
       Top = 10
       Width = 123
       Height = 29
+      Action = actConfiguracoes
       Anchors = [akTop, akRight]
-      Caption = 'Configura'#231#245'es [F4]'
-      OnClick = butConfigBDClick
       ExplicitLeft = 558
     end
   end
@@ -460,9 +459,8 @@ object FrmMain: TFrmMain
     object lblNumero: TLabel
       Left = 38
       Top = 6
-      Width = 42
+      Width = 4
       Height = 16
-      Caption = '000000'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -486,9 +484,8 @@ object FrmMain: TFrmMain
     object lblDataEmissao: TLabel
       Left = 166
       Top = 6
-      Width = 66
+      Width = 4
       Height = 16
-      Caption = '00/00/0000'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -568,6 +565,7 @@ object FrmMain: TFrmMain
     object actConfiguracoes: TAction
       Caption = 'Configura'#231#245'es [F4]'
       ShortCut = 115
+      OnExecute = actConfiguracoesExecute
     end
     object actSalvarItem: TAction
       Caption = 'Inserir Item [F5]'
